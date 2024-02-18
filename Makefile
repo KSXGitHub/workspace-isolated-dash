@@ -1,6 +1,6 @@
 PROJECT = workspace-isolated-dash
 
-UUID = `grep -oP '(?<="uuid": ")[^"]*' $(PROJECT)/metadata.json`
+UUID = `jq -r .uuid < src/metadata.json`
 
 ZIP = zip -FSro
 CP = rsync -aP
