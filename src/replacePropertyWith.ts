@@ -1,5 +1,3 @@
-import getOrInit from './getOrInit.js'
-
 export class PropertyReplacementHandle<Object extends object, Key extends keyof Object> {
   private _object: Object
   private _key: Key
