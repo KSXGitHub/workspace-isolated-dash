@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": false,
+    "strictNullChecks": true,
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    "correction.cjs"
+  ]
+}
