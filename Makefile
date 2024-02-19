@@ -18,7 +18,7 @@ install: clean build
 	rsync -aP dist/ "$(HOME)/.local/share/gnome-shell/extensions/$(UUID)/"
 
 uninstall:
-	rm -rf "$(HOME)/.local/share/gnome-shell/extensions/$(UUID)/"
+	rm -rfv "$(HOME)/.local/share/gnome-shell/extensions/$(UUID)/"
 
 clean:
 	find . -type f -name '*~' -delete
