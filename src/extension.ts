@@ -101,11 +101,9 @@ class WorkspaceIsolator {
     return app.is_on_workspace(global.workspaceManager.get_active_workspace())
   }
 
-  public static refresh(appSystem?: Shell.AppSystem): void {
-    const AppSystem = appSystem || Shell.AppSystem.get_default()
-
+  public static refresh(appSystem: Shell.AppSystem): void {
     // Update icon state of all running applications
-    const running = AppSystem.get_running() // NOTE: get_running may or may not be injected, depends on whether _appSystem is defined or not
+    const running = appSystem.get_running() // NOTE: get_running may or may not be injected, depends on whether _appSystem is defined or not
     for (const app of running) {
       app.notify('state')
     }
@@ -123,13 +121,13 @@ export default class WorkspaceIsolatedDashExtension extends Extension {
   public enable(): void {
     this._appSystem = Shell.AppSystem.get_default()
     this._wsIsolator = new WorkspaceIsolator(this._appSystem)
-    WorkspaceIsolator.refresh()
+    WorkspaceIsolator.refresh(this._appSystem)
   }
 
   public disable(): void {
     this._wsIsolator.destroy()
     this._wsIsolator = null as any
-    WorkspaceIsolator.refresh()
+    WorkspaceIsolator.refresh(this._appSystem)
     this._appSystem = null as any
   }
 }
