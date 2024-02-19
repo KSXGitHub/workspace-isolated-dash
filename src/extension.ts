@@ -1,3 +1,4 @@
+import type Meta from 'gi://Meta'
 import Shell from 'gi://Shell'
 import type St from 'gi://St'
 
@@ -127,19 +128,32 @@ class WorkspaceIsolator {
 }
 
 export default class WorkspaceIsolatedDashExtension extends Extension {
-  private _appSystem: Shell.AppSystem
-  private _wsIsolator: WorkspaceIsolator
+  private _data: {
+    appSystem: Shell.AppSystem
+    wsIsolator: WorkspaceIsolator
+  } | null
 
   public enable(): void {
-    this._appSystem = Shell.AppSystem.get_default()
-    this._wsIsolator = new WorkspaceIsolator(this._appSystem)
-    WorkspaceIsolator.refresh(this._appSystem)
+    type PossibleAppSystem = Shell.AppSystem | Shell.WM | Meta.Display // get_default doesn't always return the right type
+    const appSystem: PossibleAppSystem = Shell.AppSystem.get_default()
+    if (!(appSystem instanceof Shell.AppSystem)) {
+      console.warn(`Shell.AppSystem.get_default() returned ${appSystem}, which is not a Shell.AppSystem. Ignored.`)
+      this._data = null
+      return
+    }
+    const wsIsolator = new WorkspaceIsolator(appSystem)
+    this._data = {
+      appSystem,
+      wsIsolator,
+    }
+    WorkspaceIsolator.refresh(appSystem)
   }
 
   public disable(): void {
-    this._wsIsolator.destroy()
-    this._wsIsolator = null as any
-    WorkspaceIsolator.refresh(this._appSystem)
-    this._appSystem = null as any
+    if (!this._data) return
+    this._data.wsIsolator.destroy()
+    this._data.wsIsolator = null as any
+    this._data.appSystem = null as any
+    this._data = null
   }
 }
