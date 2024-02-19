@@ -103,7 +103,7 @@ class WorkspaceIsolator {
 
   public static refresh(appSystem: Shell.AppSystem): void {
     // Update icon state of all running applications
-    const running = appSystem.get_running() // NOTE: get_running may or may not be injected, depends on whether _appSystem is defined or not
+    const running = appSystem.get_running()
     for (const app of running) {
       app.notify('state')
     }
