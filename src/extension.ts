@@ -33,7 +33,7 @@ class WorkspaceIsolator {
       'get_running',
       old_get_running =>
         function (this: Shell.AppSystem): Shell.App[] {
-          let running = old_get_running.call(this)
+          let running: Shell.App[] = old_get_running.call(this)
           if (Main.overview.visible) {
             return running.filter(WorkspaceIsolator.isActiveApp)
           } else {
