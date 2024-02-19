@@ -17,10 +17,10 @@ class WorkspaceIsolator {
   private _onRestackedId: number
   private _appSystem: Shell.AppSystem
   private _methodInjections: {
-    'this._appSystem.get_running'?: PropertyReplacementHandle<Shell.AppSystem, "get_running">
-    'Shell.App.prototype.activate'?: PropertyReplacementHandle<Shell.App, "activate">
-    'AppIcon.prototype._updateRunningStyle'?: PropertyReplacementHandle<_AppIcon, "_updateRunningStyle">
-    'AppIcon.prototype.updateRunningStyle'?: PropertyReplacementHandle<AppIcon, "updateRunningStyle">
+    'this._appSystem.get_running'?: PropertyReplacementHandle<Shell.AppSystem, 'get_running'>
+    'Shell.App.prototype.activate'?: PropertyReplacementHandle<Shell.App, 'activate'>
+    'AppIcon.prototype._updateRunningStyle'?: PropertyReplacementHandle<_AppIcon, '_updateRunningStyle'>
+    'AppIcon.prototype.updateRunningStyle'?: PropertyReplacementHandle<AppIcon, 'updateRunningStyle'>
   }
 
   public constructor(_appSystem: Shell.AppSystem) {
@@ -43,13 +43,17 @@ class WorkspaceIsolator {
     )
 
     // Extend App's activate to open a new window if no windows exist on the active workspace
-    this._methodInjections['Shell.App.prototype.activate'] = replacePropertyWith(Shell.App.prototype, 'activate', old_activate =>
-      function (this: Shell.App): void {
-        if (WorkspaceIsolator.isActiveApp(this)) {
-          return old_activate.call(this)
-        }
-        return this.open_new_window(-1)
-      })
+    this._methodInjections['Shell.App.prototype.activate'] = replacePropertyWith(
+      Shell.App.prototype,
+      'activate',
+      old_activate =>
+        function (this: Shell.App): void {
+          if (WorkspaceIsolator.isActiveApp(this)) {
+            return old_activate.call(this)
+          }
+          return this.open_new_window(-1)
+        },
+    )
 
     // Extend AppIcon's state change to hide 'running' indicator for applications not on the active workspace
     type _AppIcon = AppIcon & {
@@ -64,8 +68,16 @@ class WorkspaceIsolator {
           this._dot.hide()
         }
       }
-    this._methodInjections['AppIcon.prototype._updateRunningStyle'] = replacePropertyWith(AppIcon.prototype as _AppIcon, '_updateRunningStyle', inject_updateRunningStyle)
-    this._methodInjections['AppIcon.prototype.updateRunningStyle'] = replacePropertyWith(AppIcon.prototype, 'updateRunningStyle', inject_updateRunningStyle)
+    this._methodInjections['AppIcon.prototype._updateRunningStyle'] = replacePropertyWith(
+      AppIcon.prototype as _AppIcon,
+      '_updateRunningStyle',
+      inject_updateRunningStyle,
+    )
+    this._methodInjections['AppIcon.prototype.updateRunningStyle'] = replacePropertyWith(
+      AppIcon.prototype,
+      'updateRunningStyle',
+      inject_updateRunningStyle,
+    )
 
     // Refresh when the workspace is switched
     this._onSwitchWorkspaceId = global.windowManager.connect('switch-workspace', WorkspaceIsolator.refresh)
