@@ -117,7 +117,7 @@ class WorkspaceIsolator {
 
   public refresh(): void {
     // Update icon state of all running applications
-    const running = this._appSystem.get_running()
+    const running: Shell.App[] = Shell.AppSystem.prototype.get_running.call(this._appSystem) // use the non-injected version to notify all of them
     for (const app of running) {
       app.notify('state')
     }
