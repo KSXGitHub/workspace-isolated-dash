@@ -81,13 +81,13 @@ class WorkspaceIsolator {
     )
 
     // Refresh when the workspace is switched
-    this._onSwitchWorkspaceId = global.windowManager.connect('switch-workspace', WorkspaceIsolator.refresh)
+    this._onSwitchWorkspaceId = global.windowManager.connect('switch-workspace', () => this.refresh())
 
     // Refresh whenever there is a restack, including:
     // - window moved to another workspace
     // - window created
     // - window closed
-    this._onRestackedId = global.display.connect('restacked', WorkspaceIsolator.refresh)
+    this._onRestackedId = global.display.connect('restacked', () => this.refresh())
   }
 
   public destroy(): void {
@@ -114,9 +114,9 @@ class WorkspaceIsolator {
     return app.is_on_workspace(global.workspaceManager.get_active_workspace())
   }
 
-  public static refresh(appSystem: Shell.AppSystem): void {
+  public refresh(): void {
     // Update icon state of all running applications
-    const running = appSystem.get_running()
+    const running = this._appSystem.get_running()
     for (const app of running) {
       app.notify('state')
     }
@@ -146,7 +146,7 @@ export default class WorkspaceIsolatedDashExtension extends Extension {
       appSystem,
       wsIsolator,
     }
-    WorkspaceIsolator.refresh(appSystem)
+    wsIsolator.refresh()
   }
 
   public disable(): void {
