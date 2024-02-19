@@ -9,14 +9,14 @@ tsc: deps
 	pnpm exec tsc
 
 assets:
-	mkdir -p dist/
+	mkdir -pv dist/
 	cp -v src/metadata.json dist/metadata.json
 	cp -v LICENSE dist/COPYING
 
 build: tsc assets
 
 install: clean build
-	mkdir -p "$(HOME)/.local/share/gnome-shell/extensions/$(UUID)/"
+	mkdir -pv "$(HOME)/.local/share/gnome-shell/extensions/$(UUID)/"
 	$(CP) dist/ "$(HOME)/.local/share/gnome-shell/extensions/$(UUID)/"
 
 uninstall:
@@ -24,6 +24,6 @@ uninstall:
 
 clean:
 	find . -type f -name '*~' -delete
-	rm -rf dist/
+	rm -rfv dist/
 
 .PHONY: deps tsc assets build install uninstall clean
