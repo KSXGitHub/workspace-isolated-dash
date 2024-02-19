@@ -1,5 +1,3 @@
-PROJECT = workspace-isolated-dash
-
 UUID = `jq -r .uuid < src/metadata.json`
 
 CP = rsync -aP
