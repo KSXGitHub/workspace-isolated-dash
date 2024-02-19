@@ -16,8 +16,6 @@ export class PropertyReplacementHandle<Object extends object, Key extends keyof 
   }
 }
 
-// export const restoreProperty: Map<object, Map<string | number | symbol, () => void>> = new Map()
-
 export function replacePropertyWith<
   Object extends object,
   Key extends keyof Object,
@@ -26,22 +24,6 @@ export function replacePropertyWith<
   key: Key,
   getValue: (oldValue: Object[Key]) => Object[Key],
 ): PropertyReplacementHandle<Object, Key> {
-  // const oldValue = object[key]
-  // const newValue = getValue(oldValue)
-  // object[key] = newValue
-
-  // const restorePropertyForObject = getOrInit(
-  //   restoreProperty,
-  //   object,
-  //   (): Map<string | number | symbol, () => void> => new Map(),
-  // )
-  // restorePropertyForObject.set(key, () => {
-  //   object[key] = oldValue
-  //   restorePropertyForObject.delete(key)
-  //   if (restorePropertyForObject.size === 0) {
-  //     restoreProperty.delete(restorePropertyForObject)
-  //   }
-  // })
   return new PropertyReplacementHandle(object, key, getValue)
 }
 
