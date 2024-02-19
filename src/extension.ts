@@ -23,8 +23,8 @@ class WorkspaceIsolator {
     'AppIcon.prototype.updateRunningStyle'?: PropertyReplacementHandle<AppIcon, 'updateRunningStyle'>
   }
 
-  public constructor(_appSystem: Shell.AppSystem) {
-    this._appSystem = _appSystem
+  public constructor(appSystem: Shell.AppSystem) {
+    this._appSystem = appSystem
     this._methodInjections = {}
 
     // Extend AppSystem to only return applications running on the active workspace
