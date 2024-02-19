@@ -102,6 +102,7 @@ class WorkspaceIsolator {
       global.display.disconnect(this._onRestackedId)
       this._onRestackedId = 0
     }
+
     // Disconnect the switch-workspace signal
     if (this._onSwitchWorkspaceId) {
       global.windowManager.disconnect(this._onSwitchWorkspaceId)
