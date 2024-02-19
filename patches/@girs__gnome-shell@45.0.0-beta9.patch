@@ -1,5 +1,5 @@
 diff --git a/dist/ui/appDisplay.d.ts b/dist/ui/appDisplay.d.ts
-index 3daa195ff63239ce182142537ff8379c3160995c..15ffbeea2912bfe14eb16c31ff6bd1c2eb5a641f 100644
+index 3daa195ff63239ce182142537ff8379c3160995c..8c9a9d62955d24164dd2b2744fb65fd5597549ec 100644
 --- a/dist/ui/appDisplay.d.ts
 +++ b/dist/ui/appDisplay.d.ts
 @@ -3,6 +3,7 @@
@@ -19,8 +19,38 @@ index 3daa195ff63239ce182142537ff8379c3160995c..15ffbeea2912bfe14eb16c31ff6bd1c2
      public icon: BaseIcon;
  
      protected _id: string;
+diff --git a/dist/ui/main.d.ts b/dist/ui/main.d.ts
+index a63a4217e08ba1d3898ba0bf419e1fb1c714b339..3cde24a898e66e082965b6e28e02f542ba7e367e 100644
+--- a/dist/ui/main.d.ts
++++ b/dist/ui/main.d.ts
+@@ -48,14 +48,23 @@ import { WindowManager } from './windowManager.js';
+ // import * as Config from '../misc/config.js'
+ // import * as Util from '../misc/util.js'
+ 
+-
+ export declare const componentManager: ComponentManager;
+ 
+ export declare const extensionManager: ExtensionManager;
+ 
+ export declare const panel: Panel;
+ 
+-export declare const overview: any;
++export interface Dash {
++  _queueRedisplay(): void
++}
++interface OverviewBase {
++  dash?: Dash
++  _dash?: Dash
++  visible: boolean
++}
++type OverviewDash = { dash: Dash, _dash?: never } | { _dash: Dash, dash?: never }
++export type Overview = OverviewBase & OverviewDash
++export declare const overview: Overview;
+ 
+ export declare const runDialog: any;
+ 
 diff --git a/src/ui/appDisplay.d.ts b/src/ui/appDisplay.d.ts
-index 3daa195ff63239ce182142537ff8379c3160995c..e3f4d0f93b8309f825d55bfdbe0d4c012a99458c 100644
+index 3daa195ff63239ce182142537ff8379c3160995c..6bc575a4ef7a2f97c1f7263059719d44617a1d77 100644
 --- a/src/ui/appDisplay.d.ts
 +++ b/src/ui/appDisplay.d.ts
 @@ -3,6 +3,7 @@
@@ -40,3 +70,26 @@ index 3daa195ff63239ce182142537ff8379c3160995c..e3f4d0f93b8309f825d55bfdbe0d4c01
  
      constructor(params?: St.Button.ConstructorProperties);
      public _init(params?: St.Button.ConstructorProperties, isDraggable?: boolean, expandTitleOnHover?: boolean): void;
+diff --git a/src/ui/main.d.ts b/src/ui/main.d.ts
+index a63a4217e08ba1d3898ba0bf419e1fb1c714b339..8ba77dcf82ca8b6d9845fa995492bf375db74379 100644
+--- a/src/ui/main.d.ts
++++ b/src/ui/main.d.ts
+@@ -55,7 +55,17 @@ export declare const extensionManager: ExtensionManager;
+ 
+ export declare const panel: Panel;
+ 
+-export declare const overview: any;
++export interface Dash {
++  _queueRedisplay(): void
++}
++interface OverviewBase {
++  dash?: Dash
++  _dash?: Dash
++  visible: boolean
++}
++type OverviewDash = { dash: Dash, _dash?: never } | { _dash: Dash, dash?: never }
++export type Overview = OverviewBase & OverviewDash
++export declare const overview: Overview;
+ 
+ export declare const runDialog: any;
+ 

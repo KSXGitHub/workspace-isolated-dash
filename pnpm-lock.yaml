@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@girs/gnome-shell@45.0.0-beta9':
-    hash: vbxwt7ncl4tih6dbil2b5jksze
+    hash: bxnbj7dpprmqiijtjsjrfylemi
     path: patches/@girs__gnome-shell@45.0.0-beta9.patch
 
 dependencies:
@@ -30,7 +30,7 @@ dependencies:
     version: 2.78.0-3.2.7
   '@girs/gnome-shell':
     specifier: '=45.0.0-beta9'
-    version: 45.0.0-beta9(patch_hash=vbxwt7ncl4tih6dbil2b5jksze)
+    version: 45.0.0-beta9(patch_hash=bxnbj7dpprmqiijtjsjrfylemi)
   '@girs/gobject-2.0':
     specifier: '=2.78.0-3.2.7'
     version: 2.78.0-3.2.7
@@ -287,7 +287,7 @@ packages:
       '@girs/gobject-2.0': 2.78.0-3.2.7
     dev: false
 
-  /@girs/gnome-shell@45.0.0-beta9(patch_hash=vbxwt7ncl4tih6dbil2b5jksze):
+  /@girs/gnome-shell@45.0.0-beta9(patch_hash=bxnbj7dpprmqiijtjsjrfylemi):
     resolution: {integrity: sha512-MPl+4VFvoOiMma91PZkOujMkcosLBMZhxiLpSQXjUCG90iBtAKJAYUA8gI9cVLDjtv4aIPkKern5SIElsX5++g==}
     dependencies:
       '@girs/accountsservice-1.0': 1.0.0-3.2.7
