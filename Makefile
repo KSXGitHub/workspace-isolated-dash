@@ -13,7 +13,7 @@ tsc: deps
 assets:
 	mkdir -p dist/
 	$(CP) src/metadata.json dist/metadata.json
-	$(CP) src/COPYING dist/COPYING
+	$(CP) LICENSE dist/COPYING
 
 build: tsc assets
 
