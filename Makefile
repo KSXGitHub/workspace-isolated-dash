@@ -1,7 +1,5 @@
 UUID = `jq -r .uuid < src/metadata.json`
 
-CP = rsync -aP
-
 deps:
 	pnpm install --frozen-lockfile
 
@@ -17,7 +15,7 @@ build: tsc assets
 
 install: clean build
 	mkdir -pv "$(HOME)/.local/share/gnome-shell/extensions/$(UUID)/"
-	$(CP) dist/ "$(HOME)/.local/share/gnome-shell/extensions/$(UUID)/"
+	rsync -aP dist/ "$(HOME)/.local/share/gnome-shell/extensions/$(UUID)/"
 
 uninstall:
 	rm -rf "$(HOME)/.local/share/gnome-shell/extensions/$(UUID)/"
