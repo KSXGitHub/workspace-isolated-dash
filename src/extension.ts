@@ -1,4 +1,3 @@
-import type Meta from 'gi://Meta'
 import Shell from 'gi://Shell'
 import type St from 'gi://St'
 
@@ -108,6 +107,8 @@ class WorkspaceIsolator {
       global.windowManager.disconnect(this._onSwitchWorkspaceId)
       this._onSwitchWorkspaceId = 0
     }
+
+    this.refresh()
   }
 
   public static isActiveApp(app: Shell.App): boolean {
@@ -128,32 +129,18 @@ class WorkspaceIsolator {
 }
 
 export default class WorkspaceIsolatedDashExtension extends Extension {
-  private _data: {
-    appSystem: Shell.AppSystem
-    wsIsolator: WorkspaceIsolator
-  } | null
+  private _appSystem: Shell.AppSystem
+  private _wsIsolator: WorkspaceIsolator
 
   public enable(): void {
-    type PossibleAppSystem = Shell.AppSystem | Shell.WM | Meta.Display // get_default doesn't always return the right type
-    const appSystem: PossibleAppSystem = Shell.AppSystem.get_default()
-    if (!(appSystem instanceof Shell.AppSystem)) {
-      console.warn(`Shell.AppSystem.get_default() returned ${appSystem}, which is not a Shell.AppSystem. Ignored.`)
-      this._data = null
-      return
-    }
-    const wsIsolator = new WorkspaceIsolator(appSystem)
-    this._data = {
-      appSystem,
-      wsIsolator,
-    }
-    wsIsolator.refresh()
+    this._appSystem = Shell.AppSystem.get_default()
+    this._wsIsolator = new WorkspaceIsolator(this._appSystem)
+    this._wsIsolator.refresh()
   }
 
   public disable(): void {
-    if (!this._data) return
-    this._data.wsIsolator.destroy()
-    this._data.wsIsolator = null as any
-    this._data.appSystem = null as any
-    this._data = null
+    this._wsIsolator.destroy()
+    this._wsIsolator = null as any
+    this._appSystem = null as any
   }
 }
