@@ -1,0 +1,42 @@
+diff --git a/dist/ui/appDisplay.d.ts b/dist/ui/appDisplay.d.ts
+index 3daa195ff63239ce182142537ff8379c3160995c..15ffbeea2912bfe14eb16c31ff6bd1c2eb5a641f 100644
+--- a/dist/ui/appDisplay.d.ts
++++ b/dist/ui/appDisplay.d.ts
+@@ -3,6 +3,7 @@
+ import type Gio from '@girs/gio-2.0';
+ import type St from '@girs/st-13';
+ import type Clutter from '@girs/clutter-13';
++import type Shell13 from '@girs/shell-13';
+ 
+ import { GridSearchResult } from './search.js';
+ 
+@@ -146,7 +147,7 @@ export namespace AppIcon {
+ 
+ export class AppIcon extends AppViewItem {
+ 
+-    public app: any;
++    public app: Shell13.App;
+     public icon: BaseIcon;
+ 
+     protected _id: string;
+diff --git a/src/ui/appDisplay.d.ts b/src/ui/appDisplay.d.ts
+index 3daa195ff63239ce182142537ff8379c3160995c..e3f4d0f93b8309f825d55bfdbe0d4c012a99458c 100644
+--- a/src/ui/appDisplay.d.ts
++++ b/src/ui/appDisplay.d.ts
+@@ -3,6 +3,7 @@
+ import type Gio from '@girs/gio-2.0';
+ import type St from '@girs/st-13';
+ import type Clutter from '@girs/clutter-13';
++import type Shell13 from '@girs/shell-13';
+ 
+ import { GridSearchResult } from './search.js';
+ 
+@@ -112,7 +113,7 @@ export class AppSearchProvider {
+ export class AppViewItem extends St.Button {
+ 
+     readonly id: string;
+-    readonly app: any;
++    readonly app: Shell13.App;
+ 
+     constructor(params?: St.Button.ConstructorProperties);
+     public _init(params?: St.Button.ConstructorProperties, isDraggable?: boolean, expandTitleOnHover?: boolean): void;
