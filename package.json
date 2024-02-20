@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "license": "GPL-3.0-only",
+  "license": "GPL-2.0-only",
   "sideEffects": false,
   "dependencies": {
     "@girs/cairo-1.0": "=1.0.0-3.2.7",
