@@ -1,5 +1,5 @@
 {
-  "name": "gnome-extension-circular-widgets",
+  "name": "gnome-shell-extension-workspace-isolated-dash",
   "version": "0.0.0",
   "private": true,
   "type": "module",
