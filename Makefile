@@ -23,5 +23,6 @@ uninstall:
 clean:
 	find . -type f -name '*~' -delete
 	rm -rfv dist/
+	rm -fv .tsbuildinfo
 
 .PHONY: deps tsc assets build install uninstall clean
