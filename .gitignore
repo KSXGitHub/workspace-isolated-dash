@@ -4,3 +4,4 @@ gschemas.compiled
 /.vscode
 node_modules
 /dist
+*.tsbuildinfo
